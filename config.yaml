@@ -1,0 +1,25 @@
+paths:
+  landmarks_csv: data/landmarks.csv     # table of extracted landmark files (label, split, path)
+  landmarks_dir: data/landmarks
+  video_manifest: data/video_manifest.csv
+  outputs: outputs
+  mediapipe_models: models/mediapipe
+
+seq_len: 32               # every sample is resampled to this many frames
+min_frames: 8             # drop videos shorter than this
+min_hand_fraction: 0.2    # drop videos where hands are visible in fewer frames than this
+
+train:
+  batch_size: 32
+  epochs: 120
+  lr: 0.001
+  patience: 15
+  dropout: 0.3
+  seed: 42
+
+realtime:
+  window: 48              # webcam frames in the rolling buffer (~1.5 s at 30 fps)
+  stride: 6               # run the model every N frames
+  threshold: 0.6          # minimum confidence to accept a prediction
+  consensus: 3            # same prediction this many times in a row before showing it
+  min_hand_fraction: 0.3  # skip prediction when hands are mostly absent
